@@ -194,7 +194,7 @@ SUMMARAZATION RESULTS </br>
 | **Catboost** | 99.0 | 84.9 | 98.0 | 91.4 |
 | **Ensemble** | 100 | 84.9 | 97.9 | 91.9 |
 
-## Conclutions
+## Conclusions
 Taking the results of each evaluation into consideration, we conclude boosting and tree techniques are very capable and efficient with this type of problem. For our predictions we decide to use the XGBoost as consists a highly flexible and versatile method based on the implementation of Gradient Boosting Machines, providing accurate results. Furthermore, although, the accuracy is not as high as Catboost it offers amazing testing results and execution speed. An alternative solution we suggest is the ensemble method, which combines the capabilities of the previous classifiers offering equally great performance power.
 
 
