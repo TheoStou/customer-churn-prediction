@@ -3,7 +3,7 @@
 
 The project is based on the Kaggle competition "Customer Churn Prediction 2020", as you can find [here](https://www.kaggle.com/c/customer-churn-prediction-2020/overview/description). </br> The evaluation is based on the test Accuracy criterion: (Accuracy = Number of correct predictions/Number of total test samples). </br> </br>
 
-The following approach managed to achieve a score of 0.99111 on Public's Leaderboard and 0.97333 on Private.
+The following approach managed to achieve a score of 0.99111 on Public Leaderboard and 0.97333 on Private.
 
 ## Table of Contents
 
