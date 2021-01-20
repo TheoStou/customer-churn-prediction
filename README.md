@@ -100,12 +100,96 @@ df_train['voice_mail_plan'] = np.where(df_train['voice_mail_plan'] == 'yes', 1, 
 ```
 ### B. Feature combination
 Three new features are created based on the combination of other features. 
-total_minutes: total_day_minutes + total_eve_minutes + total_night_minutes + total_intl_minutes
-total_calls: total_day_calls + total_eve_calls + total_night_calls + total_intl_calls
-total_charge: total_day_charge + total_eve_charge + total_night_charge + total_intl_charge
+- total_minutes: total_day_minutes + total_eve_minutes + total_night_minutes + total_intl_minutes
+- total_calls: total_day_calls + total_eve_calls + total_night_calls + total_intl_calls
+- total_charge: total_day_charge + total_eve_charge + total_night_charge + total_intl_charge
 
 
+### C. Dummies for categorical features
+Concerning the categorical variable, sometimes is more useful to convert them into binary variables. Nonetheless, such an operation frequently is not sufficient to enhance the improvement of a classifier. To this point, get_dummies is a common method utilized to offer better outcomes.
+```ruby
+# Using dummies for area_code and state
 
+# One hot encode the area_code column
+df_area_code_one_hot = pd.get_dummies(df_train['area_code'], prefix='area_code')
+
+# One hot encode the state column
+df_state_one_hot = pd.get_dummies(df_train['state'], prefix='state')
+
+# Combine the one hot encoded columns with df_train                                    
+df_train = pd.concat([df_train, df_area_code_one_hot, df_state_one_hot], axis=1)
+
+# Drop the original categorical columns (because now they've been one hot encoded)
+df_train = df_train.drop(['area_code', 'state'], axis=1)
+```
+
+
+### D. Removing the undesired columns
+![Correlation matrix of the features before getting dummies](https://user-images.githubusercontent.com/74372152/105180765-a256f680-5b33-11eb-81a9-c524d2f70bd4.png) </br>
+Correlation matrix of the features before getting dummies </br>
+
+
+## Machine Learning Classifiers 
+- XGBClassifier
+- Random Forest
+- Gradient Boosting Machine
+- Catboost
+
+## Implement an Essemble Method
+One very common method that is being utilized in many cases, is that of the ensemble technique. With the term ensemble method, we define this technique where we combine several basic models in order to generate an optimal predictive model. In other words, rather than creating one model that can hopefully make an accurate prediction, we take into account several different models to produce one final classifier.
+Using Ensemble Vote Classifier (Soft Voting): 
+```ruby
+from sklearn.model_selection import RepeatedStratifiedKFold
+clf1 = GradientBoostingClassifier()
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,colsample_bytree=1, gamma=0.01, learning_rate=0.1, max_delta_step=0,max_depth=7,
+                    min_child_weight=5, missing=None, n_estimators=20,n_jobs=1, nthread=None, objective='binary:logistic', random_state=0,reg_alpha=0, 
+                    reg_lambda=1, scale_pos_weight=1, seed=None, silent=True, subsample=1).fit(X_train, y_train)
+ensemble = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+ 
+# evaluate a give model using cross-validation
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+print('10-RepeatedStratifiedKFold cross validation:\n')
+ 
+labels = ['GradientBoostingClassifier', 'Random Forest', 'XGBClassifier','Ensemble']
+results = []
+for clf, label in zip([clf1, clf2, clf3, ensemble], labels):
+ 
+    scores = model_selection.cross_val_score(clf, X_train, y_train, cv=cv, scoring='accuracy', n_jobs=-1, error_score='raise')
+    results.append(scores)
+    print("Accuracy: %0.3f (+/- %0.2f) [%s]"% (scores.mean(), scores.std(), label))
+ 
+plt.boxplot(results, labels=labels, showmeans=True)
+plt.show()
+``` 
+Output: 10-RepeatedStratifiedKFold cross validation:
+
+Accuracy: 0.979 (+/- 0.01) [GradientBoostingClassifier] </br>
+Accuracy: 0.974 (+/- 0.01) [Random Forest] </br>
+Accuracy: 0.978 (+/- 0.01) [XGBClassifier] </br>
+Accuracy: 0.979 (+/- 0.01) [Ensemble] </br>
+
+![Boxplot of ensmble method](https://user-images.githubusercontent.com/74372152/105181442-79833100-5b34-11eb-945d-911c61f7154b.png)
+
+
+## Evaluation of classifiers
+All classifiers are assessed in terms of Precision, Recall, Accuracy, F-measure, specificity, learning curves and ROC(Receiver Operating Characteristics). Additionally, a confusion matrix is provided for each case. An example of the XGBoost clasifier evaluation is demonstrated down below. </br>
+![Learning Curve for XGBoost](https://user-images.githubusercontent.com/74372152/105182036-3bd2d800-5b35-11eb-98df-fc984f68d681.png) </br>
+Learning Curve for XGBoost </br> </br>
+![Learning Curve for XGBoost2](https://user-images.githubusercontent.com/74372152/105182790-2316f200-5b36-11eb-8cd2-f7aec8cb9ef9.png) </br>
+ROC curve for XGBoost </br> </br>
+![Confution Matrix for XGBoost](https://user-images.githubusercontent.com/74372152/105182928-4b9eec00-5b36-11eb-8498-0d3c172d1763.png) </br>
+Confution Matrix for XGBoost </br> </br> 
+
+NOTE: Additional plots are provided in Plots folder. </br> </br> 
+SUMMARAZATION RESULTS </br>
+| **Classifiers** | **Precision(%)** | **Recall(%)** | **Accuracy(%)** | **F-measure(%)** |
+| :--- | :--- | :--- | :--- | :--- |
+| **XGBoost** | 100 | 84.3 | 97.8 | 91.5 |
+| **Random Forest** | 100 | 80.9 | 97.2 | 89.5 |
+| **Gradient Boosting** | 98.3 | 86.5 | 97.9 | 92.0 |
+| **Catboost** | 99.0 | 84.9 | 98.0 | 91.4 |
+| **Ensemble** | 100 | 84.9 | 97.9 | 91.9 |
 
 
 
