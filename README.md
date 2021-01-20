@@ -130,10 +130,13 @@ Correlation matrix of the features before getting dummies </br>
 
 
 ## Machine Learning Classifiers 
+A Cross Validation using stratified kfold with 10 splits was implemented in order to train the following classifiers: </br>
+
 - XGBClassifier
 - Random Forest
 - Gradient Boosting Machine
 - Catboost
+
 
 ## Implement an Essemble Method
 One very common method that is being utilized in many cases, is that of the ensemble technique. With the term ensemble method, we define this technique where we combine several basic models in order to generate an optimal predictive model. In other words, rather than creating one model that can hopefully make an accurate prediction, we take into account several different models to produce one final classifier.
@@ -191,7 +194,8 @@ SUMMARAZATION RESULTS </br>
 | **Catboost** | 99.0 | 84.9 | 98.0 | 91.4 |
 | **Ensemble** | 100 | 84.9 | 97.9 | 91.9 |
 
-
+## Conclutions
+Taking the results of each evaluation into consideration, we conclude boosting and tree techniques are very capable and efficient with this type of problem. For our predictions we decide to use the XGBoost as consists a highly flexible and versatile method based on the implementation of Gradient Boosting Machines, providing accurate results. Furthermore, although, the accuracy is not as high as Catboost it offers amazing testing results and execution speed. An alternative solution we suggest is the ensemble method, which combines the capabilities of the previous classifiers offering equally great performance power.
 
 
 
