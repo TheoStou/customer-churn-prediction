@@ -1,6 +1,8 @@
 # Customer Churn Prediction
 (Predict whether a customer will change telco provider.) </br>
 
+The project is based on the Kaggle competition "Customer Churn Prediction 2020", as you can find [here](https://www.kaggle.com/c/customer-churn-prediction-2020/overview/description). </br> The evaluation is based on the test Accuracy criterion: (Accuracy = Number of correct predictions/Number of total test samples). 
+
 
 ## Table of Contents
 
@@ -38,21 +40,69 @@ ATTRIBUTES OF THE TRAINING SET  </br>
 
 
 ## Exploratory Data Analysis
-
 A significant task before moving with the manipulation and transformation of the data is the exploratory data analysis which may provide us with some valuable indications regarding the two separate cases ("churn", "non-churn") customers.
 
+
 ### Cheching for imbalance
+Estimate the churn percentage: 
+```ruby
+y_True = train["churn"][train["churn"] == 'yes']
+print ("Churn Percentage = "+str( (y_True.shape[0] / train["churn"].shape[0]) * 100 ))
+```
+Output: Churn Percentage = 14.070588235294117
+
+Create a bar plot for churn:
+```ruby
+y = train["churn"].value_counts()
+sns.barplot(y.index, y.values)
+```
+![Number of cases, target attribute(churn)](https://user-images.githubusercontent.com/74372152/105177577-87828300-5b2f-11eb-8129-088f1a2a32c1.png) </br>
+Number of cases, target attribute(churn) </br>
 
 
+### Visualizing catagorical features regarding the churn value
+![Donat chart for area_code](https://user-images.githubusercontent.com/74372152/105177865-f8299f80-5b2f-11eb-91b0-f0b28ba806cf.png) </br>
+Donat chart for area_code </br> </br>
+![Donat chart for international_plan](https://user-images.githubusercontent.com/74372152/105177907-0677bb80-5b30-11eb-8e8f-e9281ba169bc.png) </br>
+Donat chart for international_plan </br> </br>
+![Donat chart for voice_mail_plan](https://user-images.githubusercontent.com/74372152/105177945-11325080-5b30-11eb-845e-bd53dc56988e.png) </br>
+Donat chart for voice_mail_plan </br> </br>
 
 
+### Visualizing numerical features regarding the churn value
+![Histogram of account_length](https://user-images.githubusercontent.com/74372152/105178633-f7453d80-5b30-11eb-81ea-b5f008fca5d8.png) </br>
+Histogram of account_length </br> </br> 
+![Histogram of number_vmail_messages](https://user-images.githubusercontent.com/74372152/105178682-0926e080-5b31-11eb-93d6-94c40a19739d.png) </br>
+Histogram of number_vmail_messages </br> </br>
+NOTE: Additional plots are provided in Plots folder.
 
 
+## Feature Engineering
+Maybe the most considerable phase, in order to achieve the best and most efficient results is that of the feature engineering. To accomplice our aims, we begin with transforming the boolean attributes to binary and we proceed with the combination of some features. Furthermore, a significant procedure that contributes to obtaining superior results is that of the dummy’s method to create dummy variables. Finally, considering the correlation matrix and the feature importance we remove the undesired columns.
 
+### A. Transform boolean variables to binary variables
+Often it is more effective to convert a string or a boolean variable into a binary variable. With this way, an algorithm may handle more appropriately a dataset and achieve better performance.
 
+```ruby
+# 0 and 1 for binary attributes
 
+# Binarize churn 
+df_train['churn'] = train['churn']
+df_train['churn'] = np.where(df_train['churn'] == 'yes', 1, 0) # change churn to 0 for no and 1 for yes
 
+# Binarize international_plan
+df_train['international_plan'] = train['international_plan']
+df_train['international_plan'] = np.where(df_train['international_plan'] == 'yes', 1, 0) 
 
+# Binarize voice_mail_plan
+df_train['voice_mail_plan'] = train['voice_mail_plan']
+df_train['voice_mail_plan'] = np.where(df_train['voice_mail_plan'] == 'yes', 1, 0) 
+```
+### B. Feature combination
+Three new features are created based on the combination of other features. 
+total_minutes: total_day_minutes + total_eve_minutes + total_night_minutes + total_intl_minutes
+total_calls: total_day_calls + total_eve_calls + total_night_calls + total_intl_calls
+total_charge: total_day_charge + total_eve_charge + total_night_charge + total_intl_charge
 
 
 
