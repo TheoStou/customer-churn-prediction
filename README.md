@@ -1,18 +1,19 @@
 # Customer Churn Prediction
 (Predict whether a customer will change telco provider.) </br>
 
-The project is based on the Kaggle competition "Customer Churn Prediction 2020", as you can find [here](https://www.kaggle.com/c/customer-churn-prediction-2020/overview/description). </br> The evaluation is based on the test Accuracy criterion: (Accuracy = Number of correct predictions/Number of total test samples). 
+The project is based on the Kaggle competition "Customer Churn Prediction 2020", as you can find [here](https://www.kaggle.com/c/customer-churn-prediction-2020/overview/description). </br> The evaluation is based on the test Accuracy criterion: (Accuracy = Number of correct predictions/Number of total test samples). </br> </br>
 
+The following approach managed to achieve a score of 0.99111 on Public's Leaderboard and 0.97333 on Private.
 
 ## Table of Contents
 
 
 
 
-## Introduction
+## 1. Introduction
 Customer churn or customer attrition is one of the most fundamental problems and major challenges for several large companies. In this project, we train various machine learning models and we aim to predict whether a customer will change a telecommunication provider. In the first part of our effort, we apply and evaluate our models using cross-validation on a dataset provided by Kaggle (train.csv), regarding the churn prediction. For the purpose of our experiment, we use XGBoost, Random Forest, Gradient Boosting, and Catboost. Sequentially, we try to implement the Ensemble method with soft voting to achieve better results. To pinpoint the importance of the contained features we utilize the XGBoost classifier. Finally, in order to ascertain our best model, we consider the confusion matrix, as well as the precision, the recall, and the f1-score for each of the classifiers.
 
-## Data
+## 2. Data
 The dataset is consisted in total of 5000 instances, of two separate files, a training set with 4250 cases and a testing set with 750 cases. The training set is composed of 19 features and one Boolean variable “churn”, which consists our target variable. The given columns from the training set are summarized in the following table: </br>
 ATTRIBUTES OF THE TRAINING SET  </br>
 | **Col. No** | **Attribute Name** | **Type** | **Description of the Attribute** |
@@ -39,7 +40,7 @@ ATTRIBUTES OF THE TRAINING SET  </br>
 | 20 | churn | boolean | Customer churn - target variable. |
 
 
-## Exploratory Data Analysis
+## 3. Exploratory Data Analysis
 A significant task before moving with the manipulation and transformation of the data is the exploratory data analysis which may provide us with some valuable indications regarding the two separate cases ("churn", "non-churn") customers.
 
 
@@ -77,7 +78,7 @@ Histogram of number_vmail_messages </br> </br>
 NOTE: Additional plots are provided in Plots folder.
 
 
-## Feature Engineering
+## 4. Feature Engineering
 Maybe the most considerable phase, in order to achieve the best and most efficient results is that of the feature engineering. To accomplice our aims, we begin with transforming the boolean attributes to binary and we proceed with the combination of some features. Furthermore, a significant procedure that contributes to obtaining superior results is that of the dummy’s method to create dummy variables. Finally, considering the correlation matrix and the feature importance we remove the undesired columns.
 
 ### A. Transform boolean variables to binary variables
@@ -129,7 +130,7 @@ df_train = df_train.drop(['area_code', 'state'], axis=1)
 Correlation matrix of the features before getting dummies </br>
 
 
-## Machine Learning Classifiers 
+## 5. Machine Learning Classifiers 
 A Cross Validation using stratified kfold with 10 splits was implemented in order to train the following classifiers: </br>
 
 - XGBClassifier
@@ -138,7 +139,7 @@ A Cross Validation using stratified kfold with 10 splits was implemented in orde
 - Catboost
 
 
-## Implement an Essemble Method
+## 6. Implement an Essemble Method
 One very common method that is being utilized in many cases, is that of the ensemble technique. With the term ensemble method, we define this technique where we combine several basic models in order to generate an optimal predictive model. In other words, rather than creating one model that can hopefully make an accurate prediction, we take into account several different models to produce one final classifier.
 Using Ensemble Vote Classifier (Soft Voting): 
 ```ruby
@@ -170,12 +171,12 @@ Output: 10-RepeatedStratifiedKFold cross validation:
 Accuracy: 0.979 (+/- 0.01) [GradientBoostingClassifier] </br>
 Accuracy: 0.974 (+/- 0.01) [Random Forest] </br>
 Accuracy: 0.978 (+/- 0.01) [XGBClassifier] </br>
-Accuracy: 0.979 (+/- 0.01) [Ensemble] </br>
+Accuracy: 0.979 (+/- 0.01) [Ensemble] </br> 
 
 ![Boxplot of ensmble method](https://user-images.githubusercontent.com/74372152/105181442-79833100-5b34-11eb-945d-911c61f7154b.png)
 
 
-## Evaluation of classifiers
+## 7. Evaluation of classifiers
 All classifiers are assessed in terms of Precision, Recall, Accuracy, F-measure, specificity, learning curves and ROC(Receiver Operating Characteristics). Additionally, a confusion matrix is provided for each case. An example of the XGBoost clasifier evaluation is demonstrated down below. </br>
 ![Learning Curve for XGBoost](https://user-images.githubusercontent.com/74372152/105182036-3bd2d800-5b35-11eb-98df-fc984f68d681.png) </br>
 Learning Curve for XGBoost </br> </br>
