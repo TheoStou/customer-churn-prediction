@@ -140,7 +140,7 @@ df_train = df_train.drop(['area_code', 'state'], axis=1)
 
 
 ### D. Removing the undesired columns
-At this point we select the attributes with correlation equal to or near 1 and keep them out of the original dataset. Although this is not offering any major difference, we can speculate a slight improvement in the performance of the different classifiers. These features are the following total_day_charge, total_eve_minutes, total_night_charge, total_intl_charge and account_length. </br> </br>
+At this point we select the attributes with a correlation equal to or near 1 and keep them out of the original dataset. Although this is not offering any major difference, we can speculate a slight improvement in the performance of the different classifiers. These features are the following total_day_charge, total_eve_minutes, total_night_charge, total_intl_charge and account_length. </br> </br>
 ![Correlation matrix of the features before getting dummies](https://user-images.githubusercontent.com/74372152/105180765-a256f680-5b33-11eb-81a9-c524d2f70bd4.png) </br>
 Correlation matrix of the features before getting dummies </br>
 
