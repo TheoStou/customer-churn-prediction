@@ -215,5 +215,5 @@ Taking the results of each evaluation into consideration, we conclude boosting a
 
 
 ## References
-
+[1] https://machinelearningmastery.com/stacking-ensemble-machine-learning-with-python/
 
