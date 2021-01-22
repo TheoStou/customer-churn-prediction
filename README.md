@@ -6,9 +6,23 @@ The project is based on the Kaggle competition "Customer Churn Prediction 2020",
 The following approach managed to achieve a score of 0.99111 on Public Leaderboard and 0.97333 on Private.
 
 ## Table of Contents
-
-
-
+* [1. Introduction](#1-introduction)
+* [2. Data](#2-data)
+* [3. Exploratory Data Analysis](#3-exploratory-data-analysis)
+  * [Cheching for imbalance](#cheching-for-imbalance)
+  * [Visualizing catagorical features regarding the churn value](#visualizing-catagorical-features-regarding-the-churn-value)
+  * [Visualizing numerical features regarding the churn value](#visualizing-numerical-features-regarding-the-churn-value)
+* [4. Feature Engineering](#4-feature-engineering)
+  * [A. Transform boolean variables to binary variables](#a-transform-boolean-variables-to-binary-variables)
+  * [B. Feature combination](#b-feature-combination)
+  * [C. Dummies for categorical features](#c-dummies-for-categorical-features)
+  * [D. Removing the undesired columns](#d-removing-the-undesired-columns)
+* [5. Machine Learning Classifiers](#5-machine-learning-classifiers)
+* [6. Implement an Essemble Method](#6-implement-an-essemble-method)
+* [7. Evaluation of classifiers](#7-evaluation-of-classifiers)
+* [Conclusions](#conclusions)
+* [References](#references)
+  
 
 ## 1. Introduction
 Customer churn or customer attrition is one of the most fundamental problems and major challenges for several large companies. In this project, we train various machine learning models and we aim to predict whether a customer will change a telecommunication provider. In the first part of our effort, we apply and evaluate our models using cross-validation on a dataset provided by Kaggle (train.csv), regarding the churn prediction. For the purpose of our experiment, we use XGBoost, Random Forest, Gradient Boosting, and Catboost. Sequentially, we try to implement the Ensemble method with soft voting to achieve better results. To pinpoint the importance of the contained features we utilize the XGBoost classifier. Finally, in order to ascertain our best model, we consider the confusion matrix, as well as the precision, the recall, and the f1-score for each of the classifiers.
@@ -199,5 +213,6 @@ SUMMARAZATION RESULTS </br>
 Taking the results of each evaluation into consideration, we conclude boosting and tree techniques are very capable and efficient with this type of problem. For our predictions we decide to use the XGBoost as consists a highly flexible and versatile method based on the implementation of Gradient Boosting Machines, providing accurate results. Furthermore, although, the accuracy is not as high as Catboost it offers amazing testing results and execution speed. An alternative solution we suggest is the ensemble method, which combines the capabilities of the previous classifiers offering equally great performance power.
 
 
+## References
 
 
